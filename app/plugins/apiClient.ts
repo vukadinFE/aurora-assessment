@@ -12,9 +12,11 @@ export default defineNuxtPlugin(() => {
   apiClient.interceptors.response.use(
     (response) => response,
     async (error: AxiosError<{ detail: string }>) => {
-      console.log("Debug vercel", { error });
       if (error.response?.status === 307) {
-        const redirectUrl = error.response.headers.location;
+        const redirectUrl = error.response.headers.location.replace(
+          "http://",
+          "https://"
+        );
         if (redirectUrl) {
           return apiClient.request({
             ...error.config,
@@ -31,6 +33,7 @@ export default defineNuxtPlugin(() => {
 
       if (error.response?.status === 405) {
         if (error.config?.method === "GET") {
+          console.log("Retrying request with GET method...");
           return apiClient.post(error.config.url!);
         }
       }
