@@ -2,7 +2,9 @@ import axios, { type AxiosError } from "axios";
 import { usePurchaseStore } from "~/store/usePurchaseStore";
 
 export default defineNuxtPlugin(() => {
-  const baseURL = useRuntimeConfig().public.API_BASE;
+  const baseURL =
+    useRuntimeConfig().public.API_BASE ||
+    "https://november7-730026606190.europe-west1.run.app/";
   const apiClient = axios.create({
     baseURL,
     maxRedirects: 5,
