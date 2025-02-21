@@ -11,7 +11,6 @@ const {
   isFetching,
   fetchNextPage,
   hasNextPage,
-  error,
   isFetched,
 } = useMovies(searchDebounced);
 
@@ -79,7 +78,7 @@ const steamStore = useStreamStore();
       </div>
 
       <div
-        v-if="!error && isFetched && !movies.length"
+        v-if="isFetched && !movies.length"
         class="text-center py-30 text-neutral-500"
       >
         <UIcon name="i-lucide-rat" :size="240" />

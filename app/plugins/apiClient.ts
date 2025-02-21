@@ -8,8 +8,10 @@ export default defineNuxtPlugin(() => {
   apiClient.interceptors.response.use(
     (response) => response,
     async (error: AxiosError<{ detail: string }>) => {
+      console.log("Debug vercel", { error });
       if (error.response?.status === 307) {
         const redirectUrl = error.response.headers.location;
+        console.log("Debug vercel", { redirectUrl });
         if (redirectUrl) {
           return apiClient.request({
             ...error.config,
