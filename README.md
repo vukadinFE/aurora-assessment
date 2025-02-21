@@ -1,6 +1,22 @@
 # Aurora Movies Assesment
 
-![VN](public/image.png)
+![Assessment Image](public/image.png)
+
+# Live Preview
+
+[Github Page](https://vukadinfe.github.io/aurora-assessment/)
+
+[Vercel](https://aurora-assessment.vercel.app/)
+
+NOTE: Communication in live preview will not work since both Github Pages and Vercel are HTTPS.
+
+See [Bug Report](#bug-report)
+
+Please [run the application locally](#development-server) for full experience.
+
+# Bug Report
+
+The API endpoint returns a 307 Temporary Redirect that downgrades the connection from HTTPS to HTTP (URL in Location Response Header), causing a mixed content error when accessed from secure origins. This bug needs to be resolved by ensuring the redirect preserves the HTTPS protocol.
 
 ## Setup
 
