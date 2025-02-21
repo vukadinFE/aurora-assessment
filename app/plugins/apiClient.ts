@@ -3,7 +3,11 @@ import { usePurchaseStore } from "~/store/usePurchaseStore";
 
 export default defineNuxtPlugin(() => {
   const baseURL = useRuntimeConfig().public.API_BASE;
-  const apiClient = axios.create({ baseURL, maxRedirects: 5 });
+  const apiClient = axios.create({
+    baseURL,
+    maxRedirects: 5,
+    withCredentials: false,
+  });
 
   apiClient.interceptors.response.use(
     (response) => response,
@@ -11,7 +15,6 @@ export default defineNuxtPlugin(() => {
       console.log("Debug vercel", { error });
       if (error.response?.status === 307) {
         const redirectUrl = error.response.headers.location;
-        console.log("Debug vercel", { redirectUrl });
         if (redirectUrl) {
           return apiClient.request({
             ...error.config,
@@ -28,7 +31,6 @@ export default defineNuxtPlugin(() => {
 
       if (error.response?.status === 405) {
         if (error.config?.method === "GET") {
-          console.log("Retrying request with GET method...");
           return apiClient.post(error.config.url!);
         }
       }
